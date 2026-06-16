@@ -2,6 +2,7 @@
 
 require "pg"
 require_relative "version"
+require_relative "sql_safety"
 
 module RpmsSql
   # Talks SQL to InterSystems IRIS over PostgreSQL wire protocol.
@@ -26,6 +27,7 @@ module RpmsSql
   # without rpms-sql in the loop, when that fits.
   class Client
     class QueryError < StandardError; end
+    class ReadOnlyViolation < QueryError; end
 
     DEFAULT_PORT = 5432
     DEFAULT_NAMESPACE = "RPMS"
@@ -47,6 +49,8 @@ module RpmsSql
     end
 
     def query(sql, params = [])
+      SqlSafety.assert_read_only!(sql)
+
       result = params.empty? ? connection.exec(sql) : connection.exec_params(sql, params)
       rows = result.to_a
       result.clear

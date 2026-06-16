@@ -46,4 +46,10 @@ class RpmsSql::MockClientTest < Minitest::Test
   def test_close_is_noop
     assert_nil @mock.close
   end
+
+  def test_query_raises_read_only_violation_on_write_sql
+    assert_raises(RpmsSql::Client::ReadOnlyViolation) do
+      @mock.query("INSERT INTO BMW.PATIENT (NAME) VALUES ('x')")
+    end
+  end
 end
