@@ -26,4 +26,11 @@ class RpmsSql::ClientTest < Minitest::Test
     assert_equal 15432, client.port
     assert_equal "USER", client.namespace
   end
+
+  def test_query_raises_read_only_violation_before_connecting
+    client = RpmsSql::Client.new(host: "h", user: "u", password: "p")
+    assert_raises(RpmsSql::Client::ReadOnlyViolation) do
+      client.query("UPDATE BMW.PATIENT SET NAME = 'x'")
+    end
+  end
 end

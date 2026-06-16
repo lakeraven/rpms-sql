@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "client"
+require_relative "sql_safety"
 
 module RpmsSql
   # Test double for Client. Seed responses by exact SQL match via
@@ -24,6 +25,8 @@ module RpmsSql
     end
 
     def query(sql, params = [])
+      SqlSafety.assert_read_only!(sql)
+
       @received_calls << { sql: sql, params: params }
       raise Client::QueryError, @errors[sql] if @errors.key?(sql)
 
