@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
                      "wire protocol (via iris-pgwire) for high-throughput access to FileMan-projected " \
                      "tables. No Rails dependency."
   spec.homepage    = "https://github.com/lakeraven/rpms-sql"
-  spec.license     = "MIT"
+  spec.license     = "Apache-2.0"
   spec.required_ruby_version = ">= 3.4.0"
 
   spec.metadata["source_code_uri"] = spec.homepage

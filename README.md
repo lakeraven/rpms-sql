@@ -89,4 +89,4 @@ Raw `query` is appropriate for: schema introspection, one-off ops, migration-sty
 
 ## License
 
-MIT
+Apache-2.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE).
